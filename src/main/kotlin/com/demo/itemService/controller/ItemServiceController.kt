@@ -9,10 +9,12 @@ import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.util.*
 
 @Slf4j
 @RestController
 @RequestMapping
+@CrossOrigin
 class ItemServiceController(private val service: MainTableService) {
 
     private val log: Logger = LoggerFactory.getLogger(MainTableServiceImpl::class.java)
@@ -23,6 +25,9 @@ class ItemServiceController(private val service: MainTableService) {
 
     @GetMapping("getAllItem")
     fun getAllItemDetails(): Collection<MainTable> = service.getAllItemDetails()
+
+    @GetMapping("searchItem/{id}")
+    fun searchItem(@PathVariable id: Int): Optional<MainTable> = service.searchItem(id)
 
     @PatchMapping("updateItem")
     fun updateItem(@RequestBody updatedItem: MainTable): ResponseEntity<String> {

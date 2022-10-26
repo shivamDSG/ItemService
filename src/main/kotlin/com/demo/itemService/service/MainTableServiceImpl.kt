@@ -12,6 +12,7 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 @Slf4j
@@ -34,6 +35,11 @@ class MainTableServiceImpl @Autowired constructor(val obj: MainTableRepo,val upd
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something Went Wrong... Item Not Added")
         }
         return ResponseEntity.status(HttpStatus.CREATED).body("A New Item Added Successfully!")
+    }
+
+    override fun searchItem(id: Int): Optional<MainTable> {
+        log.info("Inside SearchItem")
+        return obj.findById(id)
     }
 
     override fun updateItem(item: MainTable): ResponseEntity<String> {
